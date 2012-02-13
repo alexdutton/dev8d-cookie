@@ -1,0 +1,56 @@
+Dev8D Debian Packaging Exercise
+===============================
+
+ 1. Run dev8d-cookie to see what it does.
+ 
+ 2. Create a debian/ directory
+ 
+ 3. Create a debian/control file, possibly cribbing from something like
+    <https://github.com/oucs/django-conneg/blob/master/debian/control>.
+    You should change the "Section:" lines to "utils". Call the source and
+    binary packages something like "dev8d-cookie".
+ 
+ 4. Create a debian/compat file containing just '7'. This will avoid a message
+    along the lines of "compatibility levels less than 5 are not supported.".
+ 
+ 5. Create a blank debian/copyright file. If you're feeling adventurous, crib
+    its contents from another debian/copyright file.
+ 
+ 6. Create a basic debian/rules file. At the moment we don't want to override
+    anything, so it'll just need the following contents:
+ 
+    #!/usr/bin/make -f
+ 
+    %:
+    	dh $@
+ 
+    Make sure the bit before dh is a tab.
+ 
+ 7. Use dch --create to create a changelog, and fill in the missing bits. Look
+    at another changelog for clues for what the missing bits should be.
+ 
+ 7. Run dpkg-buildpackage
+ 
+ 8. You should now have something like a "dev8d-cookie_1.0_all.deb" in the
+    parent directory. Use "dpkg --contents <filename>" to look inside it. Note
+    that neither of the files are actually in the package. Let's fix that...
+ 
+ 9. Create a file called debian/<package>.install. This will tell debhelper
+    which files to include in the package.
+
+10. Using http://www.debian.org/doc/manuals/maint-guide/dother.en.html#install
+    for reference, add lines to make sure that dev8d-cookie ends up in
+	/usr/bin, and that cookies.txt ends up in /usr/share/dev8d-cookie/.
+
+11. Edit dev8d-cookie so that it refers to where cookies.txt is going to end
+    up.
+
+12. Use dch to add an entry to describe the change you just made, incrementing
+    the version number.
+
+13. Rebuild the package.
+
+14. If you've got root, install the package using dpkg -i <filename>, and run
+    dev8d-cookie to see it in action.
+
+
